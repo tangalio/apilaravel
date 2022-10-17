@@ -15,6 +15,8 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:191',
             'email' => 'required|email|max:191|unique:users,email',
+            'phone' => 'required|digits:10',
+            'address' => 'required|max:191',
             'password' => 'required|min:8',
             'confirmpassword' => 'required|same:password',
         ]);
@@ -27,6 +29,8 @@ class AuthController extends Controller
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
+                'phone' => $request->phone,
+                'address' => $request->address,
                 'password' => Hash::make($request->password),
             ]);
 
@@ -35,6 +39,9 @@ class AuthController extends Controller
             return response()->json([
                 'status' => 200,
                 'username' => $user->name,
+                'email' => $user->email,
+                'phone' => $user->phone,
+                'address' => $user->address,
                 'token' => $token,
                 'message' => 'Registered Successfully',
             ]);
@@ -65,13 +72,16 @@ class AuthController extends Controller
                     $role = 'admin';
                     $token = $user->createToken($user->email . '_AdminToken', ['server:admin'])->plainTextToken;
                 } else {
-                    $role = '';
+                    $role = 'user';
                     $token = $user->createToken($user->email . '_Token', [''])->plainTextToken;
                 }
 
                 return response()->json([
                     'status' => 200,
                     'username' => $user->name,
+                    'email' => $user->email,
+                    'phone' => $user->phone,
+                    'address' => $user->address,
                     'token' => $token,
                     'message' => 'Logged In Successfully',
                     'role' => $role,
