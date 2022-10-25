@@ -519,6 +519,7 @@ class ComposerStaticInitc1e2b4be3b7bdb02226d8a2862e1b1d8
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\API\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/AuthController.php',
         'App\\Http\\Controllers\\API\\CategoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/CategoryController.php',
+        'App\\Http\\Controllers\\API\\ColorController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/ColorController.php',
         'App\\Http\\Controllers\\API\\ProductController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/ProductController.php',
         'App\\Http\\Controllers\\API\\SizeController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/SizeController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',

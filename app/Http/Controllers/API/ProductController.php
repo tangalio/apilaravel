@@ -51,13 +51,15 @@ class ProductController extends Controller
             $product->original_price = $request->input('original_price');
             $product->qty = $request->input('qty');
 
-            if ($request->hasFile('image')) {
-                $file = $request->file('image');
-                $extension = $file->getClientOriginalExtension();
-                $filename = time() . '.' . $extension;
-                $file->move('uploads/product/', $filename);
-                $product->image = 'uploads/product/' . $filename;
-            }
+            // if ($request->hasFile('image')) {
+            //     $file = $request->file('image');
+            //     $extension = $file->getClientOriginalExtension();
+            //     $filename = time() . '.' . $extension;
+            //     $file->move('uploads/product/', $filename);
+            //     $product->image = 'uploads/product/' . $filename;
+            // }
+
+            $product->image = $request->file('image')->store('products');
 
             $product->featured = $request->input('featured') == true ? '1' : '0';
             $product->popular = $request->input('popular') == true ? '1' : '0';
