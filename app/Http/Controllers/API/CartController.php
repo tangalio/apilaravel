@@ -85,9 +85,7 @@ class CartController extends Controller
     public function show()
     {
         //
-        if (Auth::check()) {
-            return Auth::id();
-        }
+        
     }
 
     /**
