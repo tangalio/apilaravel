@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\SizeController;
@@ -56,11 +57,22 @@ Route::middleware(['auth:sanctum', 'isAPIAdmin'])->group(function () {
     Route::get('edit-color/{id}', [ColorController::class, 'edit']);
     Route::post('update-color/{id}', [ColorController::class, 'update']);
     Route::delete('delete-color/{id}', [ColorController::class, 'destroy']);
+
+    // Cart
+    Route::post('store-cart', [CartController::class, 'store']);
+    Route::get('view-cart', [CartController::class, 'index']);
+    Route::post('update-cart/{id}', [CartController::class, 'update']);
+    Route::delete('delete-cart/{id}', [CartController::class, 'destroy']);
+    
 });
+
+    // Cart
+// Route::post('store-cart', [CartController::class, 'store'])->middleware('auth:api');
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('logout', [AuthController::class, 'logout']);
+
 });
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
