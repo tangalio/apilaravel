@@ -115,17 +115,26 @@ class CartController extends Controller
             else{
                 $userID = Auth::id();
                 $cart = Cart::find($id);
-                $cart->product_id = $request->input('product_id');
-                $cart->customer_id = $userID;
-                $cart->quantity = $request->input('quantity');
-                $cart->orderDate = $request->input('orderDate');
-                $cart->deliveryDate = $request->input('deliveryDate');
+                if ($cart) {
+                    $cart->product_id = $request->input('product_id');
+                    $cart->customer_id = $userID;
+                    $cart->quantity = $request->input('quantity');
+                    $cart->orderDate = $request->input('orderDate');
+                    $cart->deliveryDate = $request->input('deliveryDate');
 
-                $cart->save();
-                return response()->json([
-                    'status' => 200,
-                    'message' => 'Cart Added Successfully',
-                ]);
+                    $cart->save();
+                    return response()->json([
+                        'status' => 200,
+                        'message' => 'Cart Added Successfully',
+                    ]);
+                }
+                else{
+                    return response()->json([
+                        'status' => 400,
+                        'message' => 'Cart Added failed',
+                    ]);
+                }
+                
             }
         }
         else {
@@ -167,4 +176,5 @@ class CartController extends Controller
             }
 
     }
+
 }

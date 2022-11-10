@@ -8,6 +8,10 @@ use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\SizeController;
 use App\Http\Controllers\API\ColorController;
+use App\Http\Controllers\API\InvoiceController;
+use App\Http\Controllers\API\InvoiceDetailController;
+use App\Http\Controllers\API\OrderController;
+use App\Http\Controllers\API\OrderDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +43,7 @@ Route::middleware(['auth:sanctum', 'isAPIAdmin'])->group(function () {
 
     // Products
     Route::post('store-product', [ProductController::class, 'store']);
-    Route::get('view-product', [ProductController::class, 'index']);
+    Route::get('view-product/{id?}', [ProductController::class, 'index']);
     Route::get('edit-product/{id}', [ProductController::class, 'edit']);
     Route::post('update-product/{id}', [ProductController::class, 'update']);
     Route::delete('delete-product/{id}', [ProductController::class, 'destroy']);
@@ -58,12 +62,30 @@ Route::middleware(['auth:sanctum', 'isAPIAdmin'])->group(function () {
     Route::post('update-color/{id}', [ColorController::class, 'update']);
     Route::delete('delete-color/{id}', [ColorController::class, 'destroy']);
 
+    // Order
+    Route::get('view-order', [OrderController::class, 'index']);
+    //Route::post('store-order', [OrderController::class, 'store']);
+    Route::post('update-order/{id}', [OrderController::class, 'update']);
+    Route::delete('delete-order/{id}', [OrderController::class, 'destroy']);
+
+    // OrderDetail
+    Route::get('view-orderdetail', [OrderDetailController::class, 'index']);
+    Route::post('store-orderdetail', [OrderDetailController::class, 'store']);
+    Route::post('update-orderdetail/{id}', [OrderDetailController::class, 'update']);
+    Route::delete('delete-orderdetail/{id}', [OrderDetailController::class, 'destroy']);
+
+    // Invoice
+    Route::get('view-invoice', [InvoiceController::class, 'index']);
+    Route::post('store-invoice', [InvoiceController::class, 'store']);
+    Route::post('update-invoice/{id}', [InvoiceController::class, 'update']);
+    Route::post('delete-invoice/{id}', [InvoiceController::class, 'destroy']);
+    
+    // Invoice Detail
+    Route::get('view-invoicedetail', [InvoiceDetailController::class, 'index']);
+    Route::post('store-invoicedetail', [InvoiceDetailController::class, 'store']);
+    Route::post('update-invoicedetail/{id}', [InvoiceDetailController::class, 'update']);
+    Route::post('delete-invoicedetail/{id}', [InvoiceDetailController::class, 'destroy']);
 });
-
-
-    // Cart
-// Route::post('store-cart', [CartController::class, 'store'])->middleware('auth:api');
-// Route::get('view-cart', [CartController::class, 'show']);    
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
@@ -73,8 +95,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('update-cart/{id}', [CartController::class, 'update']);
     Route::delete('delete-cart/{id}', [CartController::class, 'destroy']);
 
+    //Order
+    //Route::post('store-order', [OrderController::class, 'store']);
+
     //Logout
     Route::post('logout', [AuthController::class, 'logout']);
+    
 
 });
 

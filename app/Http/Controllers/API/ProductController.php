@@ -10,13 +10,28 @@ use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index($id=null)
     {
-        $products = Product::all();
-        return response()->json([
-            'status' => 200,
-            'products' => $products
-        ]);
+        // $products = Product::all();
+        // return response()->json([
+        //     'status' => 200,
+        //     'products' => $products
+        // ]);
+
+        if ($id == null) {
+            $products = Product::all();
+            return response()->json([
+                    'status' => 200,
+                    'products' => $products
+                ]);
+        }
+        else{
+            $products = Product::find($id);
+            return response()->json([
+                'status' => 200,
+                'products' => $products
+            ]);
+        }
     }
 
 
