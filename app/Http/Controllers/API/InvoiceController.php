@@ -17,7 +17,7 @@ class InvoiceController extends Controller
     public function index()
     {
         //
-        $invoice = Invoice::all();
+        $invoice = Invoice::all('id');
         return response()->json([
             'status' => 200,
             'invoice' => $invoice,

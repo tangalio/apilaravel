@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Product;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,13 +26,23 @@ class CartController extends Controller
         }
         
     }
-
+    //get quantity from product table
+    public function getQuantity($id){
+        $quan_product = Product::where('id', '=',$id)->get();
+        $number= json_decode($quan_product);
+        return $number[0]->qty;
+    }
+    //compare quantity from product and quantity from cart
+    public function compare($quan_product, $quan_cart){
+        return $quan_product >= $quan_cart;
+    }
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    
     public function store(Request $request)
     {
         //
@@ -54,8 +65,21 @@ class CartController extends Controller
                 $userID = Auth::id();
                 $cart = new Cart();
                 $cart->product_id = $request->input('product_id');
+
                 $cart->customer_id = $userID;
                 $cart->quantity = $request->input('quantity');
+                //get quantity of product in product table
+                $quan_product = $this->getQuantity($cart->product_id);
+                //compare quan_product and quan_cart
+                if(!$this->compare($quan_product, $cart->quantity)){
+                    return response()->json([
+                        'status' => 400,
+                        'message' => 'Quantity not Available',
+                        'quantity' => $cart->quantity,
+                        'quan_pro' => $quan_product
+                    ]);
+                }
+                
                 $cart->orderDate = $request->input('orderDate');
                 $cart->deliveryDate = $request->input('deliveryDate');
 
@@ -75,6 +99,7 @@ class CartController extends Controller
 
         
     }
+    
 
     /**
      * Display the specified resource.
